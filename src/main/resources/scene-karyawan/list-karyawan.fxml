@@ -81,7 +81,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="382.0" prefWidth="510.0">
                <children>
-                  <TableView layoutX="199.0" layoutY="51.0" prefHeight="382.0" prefWidth="531.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="tabelKaryawan" layoutX="199.0" layoutY="51.0" prefHeight="382.0" prefWidth="531.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="colKodeKaryawan" prefWidth="75.0" text="Kode Karyawan" />
                       <TableColumn fx:id="colNamaKaryawan" prefWidth="75.0" text="Nama Karyawan" />

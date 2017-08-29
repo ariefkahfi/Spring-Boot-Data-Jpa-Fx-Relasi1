@@ -14,4 +14,5 @@ public interface DivisiServiceDAO extends GenericServiceDAO<Divisi,String> {
     //void test(String kdoe);
     List<String> getNamaKaryawanByDivisiKode(String kode);
     List<Karyawan> getKaryawansByDivisiKode(String kode);
+    List<String> getAllOnlyKodeDivisi();
 }

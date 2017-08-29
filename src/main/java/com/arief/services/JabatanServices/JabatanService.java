@@ -53,6 +53,15 @@ public class JabatanService implements JabatanServiceDAO{
 
     @Transactional
     @Override
+    public List<String> getAllOnlyKodeJabatan() {
+        List<String> data = new ArrayList<>();
+        data.addAll(jabRepo.getAllKodeJabatan());
+
+        return data;
+    }
+
+    @Transactional
+    @Override
     public void hapus(String s) {
         jabRepo.delete(s);
     }

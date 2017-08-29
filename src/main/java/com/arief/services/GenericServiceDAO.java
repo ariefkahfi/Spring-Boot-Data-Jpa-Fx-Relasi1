@@ -16,5 +16,4 @@ public interface GenericServiceDAO<T,ID extends Serializable> {
     void hapus(ID id);
     List<T> getAll();
     T getOne(ID id);
-
 }

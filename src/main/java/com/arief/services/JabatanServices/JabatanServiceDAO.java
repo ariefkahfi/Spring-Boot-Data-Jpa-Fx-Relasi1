@@ -14,4 +14,5 @@ public interface JabatanServiceDAO extends GenericServiceDAO<Jabatan,String> {
     Jabatan getOneByKodeJabatan(String kodeJabatan);
     List<Karyawan> getJabatanKaryawanByKodeJabatan(String kodeJabatan);
     List<String> getNamaKaryawanDiJabatanIni(String kodeJabatan);
+    List<String> getAllOnlyKodeJabatan();
 }

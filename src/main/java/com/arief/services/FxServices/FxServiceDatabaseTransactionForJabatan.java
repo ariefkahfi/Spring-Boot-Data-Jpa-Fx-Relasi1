@@ -1,20 +1,21 @@
 package com.arief.services.FxServices;
 
 import com.arief.entity.Jabatan;
+import com.arief.entity.Karyawan;
 import com.arief.services.DivisiServices.DivisiServiceDAO;
 import com.arief.services.JabatanServices.JabatanService;
 import com.arief.services.JabatanServices.JabatanServiceDAO;
+import com.arief.services.KaryawanServices.KaryawanServiceDAO;
+import com.arief.services.repositories.JabatanRepo;
 import javafx.collections.FXCollections;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,7 +27,40 @@ public class FxServiceDatabaseTransactionForJabatan  {
 
     @Autowired
     private JabatanServiceDAO jabServiceDAO;
+    @Autowired
+    private JabatanRepo jabRepo;
+    @Autowired
+    private KaryawanServiceDAO karyawanServiceDAO;
 
+    @Transactional
+    public void actionPindahJabatan(Karyawan k, String kodeJabatan){
+        try{
+            if(k!=null && kodeJabatan!=null){
+                Jabatan jabatanBaru = jabRepo.findByKodeJabatan(kodeJabatan);
+                k.setJabatan(jabatanBaru);
+
+                if(!jabRepo.exists(jabatanBaru.getId())){
+                    buatAlertDialog("Data Jabatan dengan kode tersebut tidak ada", Alert.AlertType.ERROR,null);
+                }else {
+                    karyawanServiceDAO.simpan(k);
+                    buatAlertDialog("Karyawan pindah jabatan sukses", Alert.AlertType.CONFIRMATION, null);
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+
+    public void setChoiceDialogforKodeKaryawan(ChoiceDialog<String> choice){
+        choice.getItems().clear();
+        choice.getItems().addAll(karyawanServiceDAO.getAllOnlyKodeKaryawan());
+    }
+
+    public void setChoiceDialogItemsForKodeJabatan(ChoiceDialog<String> choice){
+        choice.getItems().clear();
+        choice.getItems().addAll(jabServiceDAO.getAllOnlyKodeJabatan());
+    }
 
     public void ActionDoSimpanJabatan(Jabatan jab, TextField fieldKodeJabatan,TextField fieldNamaJabatan){
         try{
