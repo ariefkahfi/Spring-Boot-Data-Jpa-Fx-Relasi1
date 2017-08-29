@@ -22,7 +22,7 @@ public class Jabatan {
     @GenericGenerator(name = "uuid",strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
-    @Column(name="kode_jabatan")
+    @Column(name="kode_jabatan",unique = true,nullable = false)
     private String kodeJabatan;
 
     @Column(name="nama_jabatan")

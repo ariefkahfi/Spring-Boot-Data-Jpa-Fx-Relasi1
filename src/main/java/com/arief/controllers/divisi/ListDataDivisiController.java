@@ -3,7 +3,7 @@ package com.arief.controllers.divisi;
 import com.arief.config.AbstractFxController;
 import com.arief.entity.Divisi;
 import com.arief.services.DivisiServices.DivisiServiceDAO;
-import com.arief.services.FxServices.ListViewForKaryawanList;
+import com.arief.services.FxServices.FxServiceDatabaseTransactionForDivisi;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -15,9 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.*;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +45,7 @@ public class ListDataDivisiController extends AbstractFxController{
     @Autowired
     private DivisiServiceDAO divisiServiceDAO;
     @Autowired
-    private ListViewForKaryawanList listDAO;
+    private FxServiceDatabaseTransactionForDivisi listDAO;
 
 
     private ContextMenu contextMenuForTableView(TableView tv){

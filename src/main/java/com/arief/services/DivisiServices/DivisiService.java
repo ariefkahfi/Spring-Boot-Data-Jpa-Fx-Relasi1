@@ -62,6 +62,16 @@ public class DivisiService implements DivisiServiceDAO {
 
     @Transactional
     @Override
+    public List<Karyawan> getKaryawansByDivisiKode(String kode) {
+        List<Karyawan> data = new ArrayList<>();
+        for(Karyawan k : findOneByKodeDivisi(kode).getKaryawanList()){
+            data.add(k);
+        }
+        return data;
+    }
+
+    @Transactional
+    @Override
     public List<Divisi> getAll() {
         return (List<Divisi>) divRepo.findAll();
     }

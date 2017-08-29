@@ -2,11 +2,9 @@ package com.arief.controllers.divisi;
 
 import com.arief.config.AbstractFxController;
 import com.arief.entity.Divisi;
-import com.arief.entity.Karyawan;
 import com.arief.services.DivisiServices.DivisiServiceDAO;
-import com.arief.services.FxServices.ListViewForKaryawanList;
+import com.arief.services.FxServices.FxServiceDatabaseTransactionForDivisi;
 import com.arief.services.KaryawanServices.KaryawanServiceDAO;
-import com.sun.org.apache.xpath.internal.operations.Div;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -15,13 +13,11 @@ import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -49,7 +45,7 @@ public class FormSimpanDivisiController extends AbstractFxController{
     @Autowired
     private KaryawanServiceDAO karyawanServiceDAO;
     @Autowired
-    private ListViewForKaryawanList list;
+    private FxServiceDatabaseTransactionForDivisi list;
 
 
 
