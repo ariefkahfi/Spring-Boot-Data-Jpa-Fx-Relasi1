@@ -42,11 +42,10 @@ public class FxServiceDatabaseTransactionForKaryawan {
         Divisi d= divRepo.findByKodeDivisi(k.getDivisi().getKodeDivisi());
         Jabatan j = jabRepo.findByKodeJabatan(k.getJabatan().getKodeJabatan());
 
-        Karyawan inner = k;
-        inner.setDivisi(d);
-        inner.setJabatan(j);
+        k.setDivisi(d);
+        k.setJabatan(j);
 
-        karyawanServiceDAO.testSave(inner);
+        karRepo.save(k);
     }
 
 
