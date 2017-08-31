@@ -49,6 +49,12 @@ public class FxServiceDatabaseTransactionForKaryawan {
     }
 
 
+    public void cekParameter(String cekStatus,String namaDivisi,String namaJabatan){
+        System.err.println(cekStatus);
+        System.err.println("Jabatan Karyawan di Parameter :  " + namaJabatan);
+        System.err.println("Divisi Karyawan di Parameter : " + namaDivisi);
+    }
+
 
     public void loadDataintoTableView(TableView<Karyawan> tabelKaryawan){
         try{
