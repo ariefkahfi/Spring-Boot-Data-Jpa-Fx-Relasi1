@@ -4,11 +4,13 @@ import com.arief.config.AbstractFxController;
 import com.arief.entity.Divisi;
 import com.arief.entity.Jabatan;
 import com.arief.entity.Karyawan;
+import com.arief.entity.Sertifikat;
 import com.arief.entity.enums.Gender;
 import com.arief.services.DivisiServices.DivisiServiceDAO;
 import com.arief.services.FxServices.FxServiceDatabaseTransactionForKaryawan;
 import com.arief.services.JabatanServices.JabatanServiceDAO;
 import com.arief.services.KaryawanServices.KaryawanServiceDAO;
+import com.arief.services.repositories.SertifikatRepo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -18,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by Arief on 8/28/2017.
@@ -31,13 +33,15 @@ public class FormSimpanKaryawanController extends AbstractFxController{
     @FXML
     private TextField fieldKodeKaryawan,fieldNamaKaryawan;
     @FXML
-    private ChoiceBox<String> cBoxJabatan,cBoxDivisi;
+    private ChoiceBox<String> cBoxJabatan,cBoxDivisi,choiceBoxSertifikat;
 
     @FXML
     private Button bSimpanDataKaryawan,bMainMenu,bDataKaryawan;
 
     @Autowired
     private FxServiceDatabaseTransactionForKaryawan fxKaryawan;
+    @Autowired
+    private SertifikatRepo sRepo;
 
     @Autowired
     private JabatanServiceDAO jabatanServiceDAO;
@@ -66,6 +70,7 @@ public class FormSimpanKaryawanController extends AbstractFxController{
     private void setUpChoiceBoxes(){
         fxKaryawan.setUpForChoiceBoxKodeDivisi(cBoxDivisi);
         fxKaryawan.setUpForChoiceBoxKodeJabatan(cBoxJabatan);
+        fxKaryawan.setUpForChoiceBoxIdSertifikat(choiceBoxSertifikat);
     }
 
    private String kodeDivisi ;
@@ -81,9 +86,7 @@ public class FormSimpanKaryawanController extends AbstractFxController{
 
     private Divisi returnForSelectedItemCBoxDivisi(){
         String kodeDivisi = cBoxDivisi.getSelectionModel().getSelectedItem();
-
         return divisiServiceDAO.findOneByKodeDivisi(kodeDivisi);
-
     }
 
     private Jabatan returnForSelectedItemCBoxJabatan(){
@@ -111,17 +114,21 @@ public class FormSimpanKaryawanController extends AbstractFxController{
                 ||returnForSelectedItemCBoxDivisi()==null
                 ||returnForSelectedItemCBoxJabatan()==null
                 ||fieldKodeKaryawan.getText().equals("")
-                ||fieldNamaKaryawan.getText().equals("")){
+                ||fieldNamaKaryawan.getText().equals("")
+                ||choiceBoxSertifikat.getValue()==null){
             System.err.println("masih ada form yang kosong");
         }else{
+            Sertifikat s1  = sRepo.findOne(choiceBoxSertifikat.getValue());
+
             Karyawan k = new Karyawan(
                     fieldKodeKaryawan.getText().trim(),
                     fieldNamaKaryawan.getText().trim(),
                     getGenderForSelectedToggle(),
                     returnForSelectedItemCBoxDivisi(),
-                    returnForSelectedItemCBoxJabatan()
+                    returnForSelectedItemCBoxJabatan(), new ArrayList<>()
+
             );
-            fxKaryawan.saveKaryawanTestInner(k);
+            fxKaryawan.saveKaryawanTestInner(k, s1);
         }
     }
 

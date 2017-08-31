@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.List;
 
 /**
  * Created by Arief on 8/28/2017.
@@ -43,6 +44,12 @@ public class Karyawan {
     @Cascade({org.hibernate.annotations.CascadeType.MERGE, org.hibernate.annotations.CascadeType.PERSIST})
     private Jabatan jabatan;
 
+
+    @ManyToMany
+    @JoinTable(name="kar_sertifikat",joinColumns = @JoinColumn(name="id_kar"),inverseJoinColumns = @JoinColumn(name="id_sertifikat"))
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
+    private List<Sertifikat> sertifikatList;
+
     public Karyawan() {
     }
 
@@ -53,6 +60,28 @@ public class Karyawan {
         this.gender = gender;
         this.divisi = divisi;
         this.jabatan = jabatan;
+    }
+
+    public Karyawan(String kodeKaryawan,
+                    String namaKaryawan,
+                    Gender gender,
+                    Divisi divisi,
+                    Jabatan jabatan,
+                    List<Sertifikat> sertifikatList) {
+        this.kodeKaryawan = kodeKaryawan;
+        this.namaKaryawan = namaKaryawan;
+        this.gender = gender;
+        this.divisi = divisi;
+        this.jabatan = jabatan;
+        this.sertifikatList = sertifikatList;
+    }
+
+    public List<Sertifikat> getSertifikatList() {
+        return sertifikatList;
+    }
+
+    public void setSertifikatList(List<Sertifikat> sertifikatList) {
+        this.sertifikatList = sertifikatList;
     }
 
     public String getId() {

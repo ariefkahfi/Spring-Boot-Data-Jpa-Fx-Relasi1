@@ -27,7 +27,7 @@
           <Button fx:id="bSimpanDataKaryawan" mnemonicParsing="false" onAction="#doSimpanKaryawan" prefHeight="25.0" prefWidth="122.0" text="Simpan" />
             <Button fx:id="bMainMenu" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#goMainMenu" text="Main Menu" />
             <Button fx:id="bDataKaryawan" layoutX="66.0" layoutY="13.0" mnemonicParsing="false" onAction="#goDataKaryawan" text="Lihat Data Karyawan" />
-            <Button layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#testSimpanLagi" prefHeight="25.0" prefWidth="122.0" text="Test Simpan" />
+            <Button layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#testSimpanLagi" prefHeight="25.0" prefWidth="201.0" text="Test Simpan Karyawan Ke Sertifikat" />
         </items>
       </ToolBar>
    </bottom>
@@ -44,6 +44,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
@@ -133,6 +134,19 @@
                      </GridPane.margin>
                   </ChoiceBox>
                   <ChoiceBox fx:id="cBoxJabatan" prefHeight="25.0" prefWidth="249.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin>
+                  </ChoiceBox>
+                  <Label text="List Sertifikat" GridPane.rowIndex="6">
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="choiceBoxSertifikat" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin>

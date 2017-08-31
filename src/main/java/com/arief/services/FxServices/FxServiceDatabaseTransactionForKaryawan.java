@@ -3,11 +3,13 @@ package com.arief.services.FxServices;
 import com.arief.entity.Divisi;
 import com.arief.entity.Jabatan;
 import com.arief.entity.Karyawan;
+import com.arief.entity.Sertifikat;
 import com.arief.entity.enums.Gender;
 import com.arief.services.KaryawanServices.KaryawanServiceDAO;
 import com.arief.services.repositories.DivisiRepo;
 import com.arief.services.repositories.JabatanRepo;
 import com.arief.services.repositories.KaryawanRepo;
+import com.arief.services.repositories.SertifikatRepo;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -35,25 +39,44 @@ public class FxServiceDatabaseTransactionForKaryawan {
     private KaryawanRepo karRepo;
 
 
+    @Autowired
+    private SertifikatRepo sertifikatRepo;
+
     private TaskExecutor task;
 
+    //Misal SaveManyToMany dari Karyawan -> Sertifikat
+    //Misal Karyawan owner side
+
+
+
     @Transactional
-    public void saveKaryawanTestInner(Karyawan k){
+    public void saveKaryawanTestInner(Karyawan k, Sertifikat s1){
         Divisi d= divRepo.findByKodeDivisi(k.getDivisi().getKodeDivisi());
         Jabatan j = jabRepo.findByKodeJabatan(k.getJabatan().getKodeJabatan());
+        Sertifikat findSertifikat = sertifikatRepo.findOne(s1.getId());
 
+
+        /*
+            Anggap bahwa parameter kedua adalah
+            List Sertifikat
+
+            for(Sertifikat findSertifikat : sertifikatList){
+                Sertifikat s = sertifikatRepo.findOne(findSertifikat.getId());
+                k.getSertifikatList().add(s);
+            }
+            ...Setelah proses penambahan
+            ..baru Karyawan di save
+
+         */
         k.setDivisi(d);
         k.setJabatan(j);
+
+        k.getSertifikatList().add(findSertifikat);
 
         karRepo.save(k);
     }
 
 
-    public void cekParameter(String cekStatus,String namaDivisi,String namaJabatan){
-        System.err.println(cekStatus);
-        System.err.println("Jabatan Karyawan di Parameter :  " + namaJabatan);
-        System.err.println("Divisi Karyawan di Parameter : " + namaDivisi);
-    }
 
 
     public void loadDataintoTableView(TableView<Karyawan> tabelKaryawan){
@@ -74,7 +97,9 @@ public class FxServiceDatabaseTransactionForKaryawan {
         cBoxDivisi.getItems().addAll(karyawanServiceDAO.getAllKodeDivisi());
         cBoxDivisi.getItems().add("-");
     }
-
+    public void setUpForChoiceBoxIdSertifikat(ChoiceBox<String> choiceBoxSertifikat){
+        choiceBoxSertifikat.getItems().addAll(sertifikatRepo.getAllIdSertifikat());
+    }
 
 
     public void buatDialog(Node node){
