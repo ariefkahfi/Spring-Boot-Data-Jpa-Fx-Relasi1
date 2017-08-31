@@ -34,7 +34,6 @@ public class FxServiceDatabaseTransactionForDivisi {
         namaKaryawans.setItems(FXCollections.observableList(karList));
     }
 
-    @Transactional
     public void actionPindahDivisi(Karyawan k,String kodeDivisi){
         try {
             if (k != null && kodeDivisi != null) {

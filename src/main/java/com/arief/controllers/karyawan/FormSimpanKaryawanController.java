@@ -3,12 +3,12 @@ package com.arief.controllers.karyawan;
 import com.arief.config.AbstractFxController;
 import com.arief.entity.Divisi;
 import com.arief.entity.Jabatan;
+import com.arief.entity.Karyawan;
 import com.arief.entity.enums.Gender;
 import com.arief.services.DivisiServices.DivisiServiceDAO;
 import com.arief.services.FxServices.FxServiceDatabaseTransactionForKaryawan;
 import com.arief.services.JabatanServices.JabatanServiceDAO;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import com.arief.services.KaryawanServices.KaryawanServiceDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -43,6 +43,9 @@ public class FormSimpanKaryawanController extends AbstractFxController{
     private JabatanServiceDAO jabatanServiceDAO;
     @Autowired
     private DivisiServiceDAO divisiServiceDAO;
+    @Autowired
+    private KaryawanServiceDAO karyawanServiceDAO;
+
 
     private ToggleGroup tg;
     private Gender gender;
@@ -101,6 +104,30 @@ public class FormSimpanKaryawanController extends AbstractFxController{
     }
 
 
+    public void testSimpanLagi(){
+
+
+        if(getGenderForSelectedToggle()==null
+                ||returnForSelectedItemCBoxDivisi()==null
+                ||returnForSelectedItemCBoxJabatan()==null
+                ||fieldKodeKaryawan.getText().equals("")
+                ||fieldNamaKaryawan.getText().equals("")){
+            System.err.println("masih ada form yang kosong");
+        }else{
+            Karyawan k = new Karyawan(
+                    fieldKodeKaryawan.getText().trim(),
+                    fieldNamaKaryawan.getText().trim(),
+                    getGenderForSelectedToggle(),
+                    returnForSelectedItemCBoxDivisi(),
+                    returnForSelectedItemCBoxJabatan()
+            );
+            fxKaryawan.saveKaryawanTestInner(k);
+        }
+    }
+
+
+
+
 
     public void doSimpanKaryawan(ActionEvent ev){
         /*if(gender==null || fieldKodeKaryawan.getText().trim().equals("") || fieldNamaKaryawan.getText().trim().equals("")){
@@ -120,6 +147,9 @@ public class FormSimpanKaryawanController extends AbstractFxController{
         }else{
             String kodeJabatan =cBoxJabatan.getValue();
             String kodeDivisi = cBoxDivisi.getValue();
+
+            System.err.println(kodeJabatan);
+            System.err.println(kodeDivisi);
 
                 fxKaryawan.ActionSaveKaryawan(fieldKodeKaryawan,
                         fieldNamaKaryawan,g,kodeDivisi,kodeJabatan);

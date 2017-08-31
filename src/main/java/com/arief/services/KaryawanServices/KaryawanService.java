@@ -1,7 +1,9 @@
 package com.arief.services.KaryawanServices;
 
+import com.arief.entity.Divisi;
 import com.arief.entity.Jabatan;
 import com.arief.entity.Karyawan;
+import com.arief.entity.enums.Gender;
 import com.arief.services.JabatanServices.JabatanServiceDAO;
 import com.arief.services.repositories.DivisiRepo;
 import com.arief.services.repositories.JabatanRepo;
@@ -44,6 +46,20 @@ public class KaryawanService implements KaryawanServiceDAO {
 
     @Transactional
     @Override
+    public void testSave(Karyawan baru) {
+        Karyawan inner = baru;
+        karRepo.save(inner);
+    }
+
+
+    @Transactional
+    @Override
+    public void simpan(Karyawan k) {
+        karRepo.save(k);
+    }
+
+    @Transactional
+    @Override
     public Karyawan findByKodeKaryawan(String kode) {
         return karRepo.findByKodeKaryawan(kode);
     }
@@ -64,11 +80,6 @@ public class KaryawanService implements KaryawanServiceDAO {
         return data;
     }
 
-    @Transactional
-    @Override
-    public void simpan(Karyawan karyawan) {
-        karRepo.save(karyawan);
-    }
 
     @Transactional
     @Override

@@ -7,6 +7,13 @@ import com.arief.controllers.jabatan.FormSimpanJabatanController;
 import com.arief.controllers.jabatan.ListDataJabatanController;
 import com.arief.controllers.karyawan.FormSimpanKaryawanController;
 import com.arief.controllers.karyawan.ListDataKaryawanController;
+import com.arief.entity.Divisi;
+import com.arief.entity.Jabatan;
+import com.arief.entity.Karyawan;
+import com.arief.entity.enums.Gender;
+import com.arief.services.DivisiServices.DivisiServiceDAO;
+import com.arief.services.JabatanServices.JabatanServiceDAO;
+import com.arief.services.KaryawanServices.KaryawanServiceDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -14,6 +21,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -32,6 +40,12 @@ public class HomeController extends AbstractFxController{
     @FXML
     private MenuBar menuBar;
 
+    @Autowired
+    private KaryawanServiceDAO karyawanServiceDAO;
+    @Autowired
+    private DivisiServiceDAO divisiServiceDAO;
+    @Autowired
+    private JabatanServiceDAO jabatanServiceDAO;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -58,10 +72,17 @@ public class HomeController extends AbstractFxController{
     }
 
     //ActionEvent untuk MenuBar Item
+
+    //Kylie c853affc-e9c2-46a8-b92f-0b6ef8eb8b4f
+
+    public void testSaveKaryawanRepo(){
+
+    }
+
     public void showListKaryawan(){
          if(getStageInstance()!=null)
             changeScene(getStageInstance(), ListDataKaryawanController.class,"/scene-karyawan/list-karyawan.fxml");
-         return;
+
     }
     public void showListJabatan(){
         changeScene(getStageInstance(), ListDataJabatanController.class,"/scene-jabatan/list-jabatan.fxml");

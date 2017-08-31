@@ -7,9 +7,13 @@ import com.arief.entity.enums.Gender;
 import com.arief.services.KaryawanServices.KaryawanServiceDAO;
 import com.arief.services.repositories.DivisiRepo;
 import com.arief.services.repositories.JabatanRepo;
+import com.arief.services.repositories.KaryawanRepo;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +31,23 @@ public class FxServiceDatabaseTransactionForKaryawan {
     private DivisiRepo divRepo;
     @Autowired
     private JabatanRepo jabRepo;
+    @Autowired
+    private KaryawanRepo karRepo;
+
+
+    private TaskExecutor task;
+
+    @Transactional
+    public void saveKaryawanTestInner(Karyawan k){
+        Divisi d= divRepo.findByKodeDivisi(k.getDivisi().getKodeDivisi());
+        Jabatan j = jabRepo.findByKodeJabatan(k.getJabatan().getKodeJabatan());
+
+        Karyawan inner = k;
+        inner.setDivisi(d);
+        inner.setJabatan(j);
+
+        karyawanServiceDAO.testSave(inner);
+    }
 
 
 
@@ -49,6 +70,8 @@ public class FxServiceDatabaseTransactionForKaryawan {
         cBoxDivisi.getItems().add("-");
     }
 
+
+
     public void buatDialog(Node node){
         Dialog<ButtonType> dialog = new Dialog<>();
 
@@ -57,6 +80,7 @@ public class FxServiceDatabaseTransactionForKaryawan {
 
         ButtonType ok = new ButtonType("OK", ButtonBar.ButtonData.APPLY);
         ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
 
         dialog.getDialogPane().getButtonTypes().setAll(ok,cancel);
         Optional<ButtonType> opt = dialog.showAndWait();
@@ -78,9 +102,11 @@ public class FxServiceDatabaseTransactionForKaryawan {
 
 
 
-
     @Transactional
-    public void ActionSaveKaryawan(TextField kodeKaryawan, TextField namaKaryawan , Gender gender, String kodeDivisi ,String kodeJabatan){
+    public void ActionSaveKaryawan(TextField kodeKaryawan,
+                                   TextField namaKaryawan ,
+                                   Gender gender,
+                                   String kodeDivisi ,String kodeJabatan){
         try{
             if(gender==null || namaKaryawan.getText().trim().equals("") || kodeKaryawan.getText().trim().equals("")){
                 buatAlertDialog("Masih Ada form yang kosong", Alert.AlertType.WARNING,null);
@@ -105,6 +131,7 @@ public class FxServiceDatabaseTransactionForKaryawan {
                    Karyawan baru = new Karyawan(kodeKaryawan.getText().trim(),namaKaryawan.getText().trim(),
                            gender,d,j) ;
                    karyawanServiceDAO.simpan(baru);
+                   System.err.println("FxServiceKaryawan : " + Thread.currentThread().getName());
                    buatAlertDialog("Data Karyawan berhasil disimpan", Alert.AlertType.CONFIRMATION,null);
                 }
             }
